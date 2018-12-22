@@ -33,6 +33,9 @@ namespace NewDevTests
 
             var myDictionary = new Dictionary<string, string>();
             myDictionary.Add("First", "First Item");
+            // Not sure if this task idea was like this, but maybe I am looking for unnecessary dficulties
+            myDictionary.Add("FIrst", "First Item");
+            myDictionary.Add("FIRST", "First Item");
 
             string temp;
             Assert.IsTrue(myDictionary.TryGetValue("First", out temp));
