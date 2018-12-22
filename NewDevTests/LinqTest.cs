@@ -27,14 +27,14 @@ namespace NewDevTests
             });
 
 
-            //var result = ??; // here replace with is your LINQ
+            var result = x.Concat(y).OrderBy(o => o.XYNo).ThenBy(o => o.Name).ToList();
 
 
-            //Assert.IsTrue(result is IList);
-            //// Check if concated
-            //Assert.AreEqual(200, result.Count);
-            //// Check if ordered
-            //Assert.IsTrue(result.Zip(result.Skip(1), (a, b) => new { a, b }).All(a => a.a.XYNo <= a.b.XYNo));
+            Assert.IsTrue(result is IList);
+            // Check if concated
+            Assert.AreEqual(200, result.Count);
+            // Check if ordered
+            Assert.IsTrue(result.Zip(result.Skip(1), (a, b) => new { a, b }).All(a => a.a.XYNo <= a.b.XYNo));
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace NewDevTests
             });
             
 
-            string result = ""; // here is your LINQ
+            string result = String.Join(", ", x.Where(o => o.Age <= 20).Select(o => o.Name));
             
             Assert.AreEqual("Name 1, Name 2", result);
         }
