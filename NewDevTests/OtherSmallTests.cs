@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,7 +23,18 @@ namespace NewDevTests
 
         public static string HumanizeSize(long size)
         {
-            return null;
+            string[] suffixes = { "B", "kB", "MB", "GB" };
+            int suffix = 0;
+            double humanizeSize = size;
+
+            while (humanizeSize >= 1024)
+            {
+                suffix++;
+                humanizeSize /= 1024;
+            }
+
+            // There can be some use for check if index exist in array 
+            return $"{humanizeSize.ToString("0.##", new CultureInfo("en-us"))} {suffixes[suffix]}";
         }
 
 
