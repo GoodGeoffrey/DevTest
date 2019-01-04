@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NewDevTests
@@ -14,9 +15,23 @@ namespace NewDevTests
         [TestMethod]
         public void UseReflectionToFill()
         {
-            object result = null;
+            object result = Activator.CreateInstance(typeof(FillMePlease));
+            var properties = result.GetType().GetProperties(
+                BindingFlags.Public |
+                BindingFlags.NonPublic |
+                BindingFlags.Instance |
+                BindingFlags.DeclaredOnly
+                );
 
-
+            foreach (var property in properties)
+            {
+                var attr = property.GetCustomAttribute(typeof(DefaultValueAttribute)) as DefaultValueAttribute;
+                var setMethod = property.GetSetMethod(false);
+                if (setMethod != null)
+                {
+                    setMethod.Invoke(result, new object[] { attr.Value });
+                }
+            }
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(FillMePlease));
